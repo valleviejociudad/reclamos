@@ -7,8 +7,7 @@
 
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
-  
-  <!-- Icons (Font Awesome) -->
+  <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
   <style>
@@ -21,11 +20,7 @@
       --text: #333;
     }
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
       font-family: 'Roboto', sans-serif;
@@ -42,9 +37,7 @@
       border-radius: 20px;
       overflow: hidden;
       box-shadow: 0 15px 40px rgba(0,0,0,0.1);
-      opacity: 0;
-      transform: translateY(30px);
-      animation: fadeInUp 0.8s ease-out forwards;
+      animation: fadeInUp 0.8s ease-out;
     }
 
     .header {
@@ -56,18 +49,13 @@
 
     .header img {
       width: 150px;
-      height: 90px;
+      height: auto;
+      margin-bottom: 10px;
     }
 
     .header h1 {
       font-size: 28px;
       font-weight: 700;
-      margin-bottom: 8px;
-    }
-
-    .header p {
-      font-size: 16px;
-      opacity: 0.9;
     }
 
     .form-container {
@@ -83,7 +71,6 @@
 
     .form-group {
       margin-bottom: 22px;
-      position: relative;
     }
 
     label {
@@ -107,7 +94,7 @@
       outline: none;
       border-color: var(--primary);
       background: white;
-      box-shadow: 0 0 0 4px rgba(46, 125, 50, 0.1);
+      box-shadow: 0 0 0 4px rgba(66, 154, 237, 0.15);
     }
 
     textarea {
@@ -135,62 +122,88 @@
 
     button:hover {
       transform: translateY(-3px);
-      box-shadow: 0 10px 25px rgba(46, 125, 50, 0.3);
+      box-shadow: 0 10px 25px rgba(66, 154, 237, 0.4);
     }
 
-    button:active {
-      transform: translateY(-1px);
+    /* ==================== MODAL / POPUP ==================== */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0; top: 0;
+      width: 100%; height: 100%;
+      background-color: rgba(0,0,0,0.5);
+      backdrop-filter: blur(5px);
+      animation: fadeIn 0.3s ease-out;
     }
 
-    button i {
-      font-size: 20px;
-    }
-
-    #msg {
-      margin-top: 25px;
-      padding: 15px;
-      border-radius: 12px;
+    .modal-content {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%) scale(0.8);
+      background: white;
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.3);
       text-align: center;
-      font-weight: 500;
-      opacity: 0;
-      transform: translateY(-10px);
-      transition: all 0.4s ease;
+      max-width: 400px;
+      width: 90%;
+      animation: modalPop 0.4s ease-out forwards;
     }
 
-    .success {
-      background: #e8f5e9;
-      color: var(--success);
-      border: 1px solid #a5d6a7;
-      opacity: 1;
-      transform: translateY(0);
+    .modal-icon {
+      font-size: 60px;
+      margin-bottom: 20px;
     }
 
-    .error {
-      background: #ffebee;
-      color: var(--error);
-      border: 1px solid #ffcdd2;
-      opacity: 1;
-      transform: translateY(0);
+    .success-icon { color: var(--success); }
+    .error-icon { color: var(--error); }
+
+    .modal-content h3 {
+      margin: 15px 0;
+      font-size: 24px;
     }
 
-    .loading {
-      color: var(--primary);
+    .modal-content p {
+      color: #666;
+      margin-bottom: 25px;
+      line-height: 1.5;
+    }
+
+    .close-btn {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 12px 30px;
+      border-radius: 50px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .close-btn:hover {
+      background: var(--primary-dark);
+      transform: scale(1.05);
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes modalPop {
+      to {
+        transform: translate(-50%, -50%) scale(1);
+      }
     }
 
     @keyframes fadeInUp {
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     @media (max-width: 480px) {
-      .form-container {
-        padding: 30px 20px;
-      }
-      .header h1 {
-        font-size: 24px;
-      }
+      .form-container { padding: 30px 20px; }
+      .header h1 { font-size: 24px; }
     }
   </style>
 </head>
@@ -198,13 +211,11 @@
 
   <div class="container">
     <div class="header">
-      <!-- Cambia esta URL por el logo real de la Municipalidad -->
       <img src="https://test-web.valleviejo.gob.ar/assets/valle-viejo-cuidad-negativo.png" alt="Logo Municipalidad">
       <h1>Reclamos Vecinales</h1>
     </div>
 
     <div class="form-container">
-      
       <form id="reclamoForm">
         <div class="form-group">
           <label for="nombre">Nombre completo</label>
@@ -213,30 +224,30 @@
 
         <div class="form-group">
           <label for="telefono">Teléfono / Celular</label>
-          <input type="text" id="telefono" required placeholder="381 123-4567" />
+          <input type="text" id="telefono" required placeholder="3834123456" />
         </div>
 
         <div class="form-group">
           <label for="direccion">Dirección</label>
-          <input type="text" id="direccion" required placeholder="Av. Principal 123, San Isidro" />
+          <input type="text" id="direccion" required placeholder="Facundo Segura 100, San Isidro" />
         </div>
 
-<div class="form-group">
-  <label for="tipo">Tipo de reclamo</label>
-  <select id="tipo" required>
-    <option value="" disabled selected>Seleccionar tipo</option>
-    <option value="Recolección">Recolección</option>
-    <option value="Desarrollo Social">Desarrollo social</option>
-    <option value="Obra Pública">Obra pública</option>
-    <option value="Alumbrado Público">Alumbrado público</option>
-    <option value="Bacheo">Bacheo</option>
-    <option value="Obra y Desmalezamiento">Obra y desmalezamiento</option>
-    <option value="Cloacas">Cloacas</option>
-    <option value="Tránsito">Tránsito</option>
-    <option value="Salud">Salud</option>
-    <option value="Otro">Otro</option>
-  </select>
-</div>
+        <div class="form-group">
+          <label for="tipo">Tipo de reclamo</label>
+          <select id="tipo" required>
+            <option value="" disabled selected>Seleccionar tipo</option>
+            <option value="Recolección">Recolección</option>
+            <option value="Desarrollo Social">Desarrollo social</option>
+            <option value="Obra Pública">Obra pública</option>
+            <option value="Alumbrado Público">Alumbrado público</option>
+            <option value="Bacheo">Bacheo</option>
+            <option value="Obra y Desmalezamiento">Obra y desmalezamiento</option>
+            <option value="Cloacas">Cloacas</option>
+            <option value="Tránsito">Tránsito</option>
+            <option value="Salud">Salud</option>
+            <option value="Otro">Otro</option>
+          </select>
+        </div>
 
         <div class="form-group">
           <label for="descripcion">Descripción del reclamo</label>
@@ -244,26 +255,58 @@
         </div>
 
         <button type="submit">
-          <i class="fas fa-paper-plane"></i>
           Enviar Reclamo
         </button>
       </form>
+    </div>
+  </div>
 
-      <div id="msg"></div>
+  <!-- ==================== MODAL ==================== -->
+  <div id="resultModal" class="modal">
+    <div class="modal-content">
+      <div id="modalIcon" class="modal-icon"></div>
+      <h3 id="modalTitle">¡Éxito!</h3>
+      <p id="modalMessage">Tu reclamo ha sido enviado correctamente.</p>
+      <button class="close-btn" onclick="closeModal()">Aceptar</button>
     </div>
   </div>
 
   <script>
     const scriptURL = "https://script.google.com/macros/s/AKfycbwBRJ0jFu9D4NSy2aRcWh1A9OKbSrDiWXtgDXVjgsLIEB_HnqTdPila6k_SsPR0ZmoY/exec";
     const form = document.getElementById("reclamoForm");
-    const msg = document.getElementById("msg");
+    const modal = document.getElementById("resultModal");
+    const modalIcon = document.getElementById("modalIcon");
+    const modalTitle = document.getElementById("modalTitle");
+    const modalMessage = document.getElementById("modalMessage");
+
+    function openModal(type, title, message) {
+      modal.style.display = "block";
+      modalIcon.innerHTML = type === "success" 
+        ? '<i class="fas fa-check-circle"></i>' 
+        : '<i class="fas fa-exclamation-triangle"></i>';
+      modalIcon.className = "modal-icon " + (type === "success" ? "success-icon" : "error-icon");
+      modalTitle.textContent = title;
+      modalMessage.textContent = message;
+    }
+
+    function closeModal() {
+      modal.style.display = "none";
+    }
+
+    // Cerrar al hacer clic fuera del modal
+    window.onclick = function(e) {
+      if (e.target === modal) closeModal();
+    }
 
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
-      
-      msg.className = "loading";
-      msg.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Enviando reclamo...`;
-      
+
+      // Mostrar carga en el botón (opcional)
+      const submitBtn = form.querySelector("button");
+      const originalText = submitBtn.innerHTML;
+      submitBtn.innerHTML = `Enviando...`;
+      submitBtn.disabled = true;
+
       const data = {
         nombre: document.getElementById("nombre").value.trim(),
         telefono: document.getElementById("telefono").value.trim(),
@@ -280,17 +323,24 @@
           body: JSON.stringify(data)
         });
 
-        msg.className = "success";
-        msg.innerHTML = `<i class="fas fa-check-circle"></i> ¡Reclamo enviado con éxito! Pronto será atendido.`;
+        // ÉXITO
+        openModal(
+          "success",
+          "¡Reclamo enviado con éxito!",
+          "Gracias por tu colaboración. Tu solicitud será atendida a la brevedad por el área correspondiente."
+        );
         form.reset();
-        
-        setTimeout(() => {
-          msg.style.opacity = "0";
-        }, 5000);
 
       } catch (err) {
-        msg.className = "error";
-        msg.innerHTML = `<i class="fas fa-exclamation-triangle"></i> Error al enviar. Intenta nuevamente o acercate a la Municipalidad.`;
+        // ERROR
+        openModal(
+          "error",
+          "Error al enviar",
+          "Hubo un problema al enviar tu reclamo. Por favor, intentá nuevamente o acercate a la Municipalidad."
+        );
+      } finally {
+        submitBtn.innerHTML = originalText;
+        submitBtn.disabled = false;
       }
     });
   </script>
