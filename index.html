@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Reclamos | Municipalidad de Valle Viejo</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+  
+  <!-- Icons (Font Awesome) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <style>
+    :root {
+      --primary: #429aed;
+      --primary-dark: #1b305e;
+      --success: #4caf50;
+      --error: #f44336;
+      --gray: #f5f5f5;
+      --text: #333;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Roboto', sans-serif;
+      background: linear-gradient(135deg, #e8f5e8 0%, #f1f8e9 100%);
+      min-height: 100vh;
+      padding: 20px 0;
+      color: var(--text);
+    }
+
+    .container {
+      max-width: 650px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeInUp 0.8s ease-out forwards;
+    }
+
+    .header {
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: white;
+      padding: 30px 20px;
+      text-align: center;
+    }
+
+    .header img {
+      width: 150px;
+      height: 90px;
+    }
+
+    .header h1 {
+      font-size: 28px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .header p {
+      font-size: 16px;
+      opacity: 0.9;
+    }
+
+    .form-container {
+      padding: 40px 30px;
+    }
+
+    h2 {
+      text-align: center;
+      color: var(--text);
+      margin-bottom: 30px;
+      font-weight: 500;
+    }
+
+    .form-group {
+      margin-bottom: 22px;
+      position: relative;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 500;
+      color: #444;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 14px 16px;
+      border: 2px solid #e0e0e0;
+      border-radius: 12px;
+      font-size: 16px;
+      transition: all 0.3s ease;
+      background: #fafafa;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      outline: none;
+      border-color: var(--primary);
+      background: white;
+      box-shadow: 0 0 0 4px rgba(46, 125, 50, 0.1);
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 120px;
+    }
+
+    button {
+      width: 100%;
+      padding: 16px;
+      background: linear-gradient(to right, var(--primary), var(--primary-dark));
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-size: 18px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-top: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 25px rgba(46, 125, 50, 0.3);
+    }
+
+    button:active {
+      transform: translateY(-1px);
+    }
+
+    button i {
+      font-size: 20px;
+    }
+
+    #msg {
+      margin-top: 25px;
+      padding: 15px;
+      border-radius: 12px;
+      text-align: center;
+      font-weight: 500;
+      opacity: 0;
+      transform: translateY(-10px);
+      transition: all 0.4s ease;
+    }
+
+    .success {
+      background: #e8f5e9;
+      color: var(--success);
+      border: 1px solid #a5d6a7;
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .error {
+      background: #ffebee;
+      color: var(--error);
+      border: 1px solid #ffcdd2;
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .loading {
+      color: var(--primary);
+    }
+
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 480px) {
+      .form-container {
+        padding: 30px 20px;
+      }
+      .header h1 {
+        font-size: 24px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="header">
+      <!-- Cambia esta URL por el logo real de la Municipalidad -->
+      <img src="https://test-web.valleviejo.gob.ar/assets/valle-viejo-cuidad-negativo.png" alt="Logo Municipalidad">
+      <h1>Reclamos Vecinales</h1>
+    </div>
+
+    <div class="form-container">
+      
+      <form id="reclamoForm">
+        <div class="form-group">
+          <label for="nombre">Nombre completo</label>
+          <input type="text" id="nombre" required placeholder="Juan Pérez" />
+        </div>
+
+        <div class="form-group">
+          <label for="telefono">Teléfono / Celular</label>
+          <input type="text" id="telefono" required placeholder="381 123-4567" />
+        </div>
+
+        <div class="form-group">
+          <label for="direccion">Dirección</label>
+          <input type="text" id="direccion" required placeholder="Av. Principal 123, San Isidro" />
+        </div>
+
+<div class="form-group">
+  <label for="tipo">Tipo de reclamo</label>
+  <select id="tipo" required>
+    <option value="" disabled selected>Seleccionar tipo</option>
+    <option value="Recolección">Recolección</option>
+    <option value="Desarrollo Social">Desarrollo social</option>
+    <option value="Obra Pública">Obra pública</option>
+    <option value="Alumbrado Público">Alumbrado público</option>
+    <option value="Bacheo">Bacheo</option>
+    <option value="Obra y Desmalezamiento">Obra y desmalezamiento</option>
+    <option value="Cloacas">Cloacas</option>
+    <option value="Tránsito">Tránsito</option>
+    <option value="Salud">Salud</option>
+    <option value="Otro">Otro</option>
+  </select>
+</div>
+
+        <div class="form-group">
+          <label for="descripcion">Descripción del reclamo</label>
+          <textarea id="descripcion" required placeholder="Detalla tu reclamo lo más claro posible..."></textarea>
+        </div>
+
+        <button type="submit">
+          <i class="fas fa-paper-plane"></i>
+          Enviar Reclamo
+        </button>
+      </form>
+
+      <div id="msg"></div>
+    </div>
+  </div>
+
+  <script>
+    const scriptURL = "https://script.google.com/macros/s/AKfycbwBRJ0jFu9D4NSy2aRcWh1A9OKbSrDiWXtgDXVjgsLIEB_HnqTdPila6k_SsPR0ZmoY/exec";
+    const form = document.getElementById("reclamoForm");
+    const msg = document.getElementById("msg");
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      
+      msg.className = "loading";
+      msg.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Enviando reclamo...`;
+      
+      const data = {
+        nombre: document.getElementById("nombre").value.trim(),
+        telefono: document.getElementById("telefono").value.trim(),
+        direccion: document.getElementById("direccion").value.trim(),
+        tipo: document.getElementById("tipo").value,
+        descripcion: document.getElementById("descripcion").value.trim(),
+      };
+
+      try {
+        await fetch(scriptURL, {
+          method: "POST",
+          mode: "no-cors",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data)
+        });
+
+        msg.className = "success";
+        msg.innerHTML = `<i class="fas fa-check-circle"></i> ¡Reclamo enviado con éxito! Pronto será atendido.`;
+        form.reset();
+        
+        setTimeout(() => {
+          msg.style.opacity = "0";
+        }, 5000);
+
+      } catch (err) {
+        msg.className = "error";
+        msg.innerHTML = `<i class="fas fa-exclamation-triangle"></i> Error al enviar. Intenta nuevamente o acercate a la Municipalidad.`;
+      }
+    });
+  </script>
+</body>
+</html>
